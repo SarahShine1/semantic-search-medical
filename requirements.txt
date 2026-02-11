@@ -3,7 +3,7 @@
 # ============================================================
 
 # Base de données
-psycopg2-binary==2.9.9    # Driver PostgreSQL pour Python
+psycopg2-binary==2.9.6
 pgvector==0.2.5            # Extension pour vecteurs dans PostgreSQL
 
 # Machine Learning / Embeddings
@@ -34,3 +34,4 @@ colorama>=0.4.6            # Couleurs dans le terminal (Windows)
 # Testing (optionnel)
 pytest>=7.4.0              # Tests unitaires
 streamlit
+wheel
