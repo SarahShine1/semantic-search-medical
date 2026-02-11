@@ -3,6 +3,8 @@
 # ============================================================
 
 # Base de données
+psycopg2-binary
+
 #psycopg2-binary==2.9.6
 pgvector==0.2.5            # Extension pour vecteurs dans PostgreSQL
 
