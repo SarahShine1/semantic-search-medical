@@ -11,6 +11,27 @@ from sentence_transformers import SentenceTransformer
 from config import Config, Model1Config, Model2Config
 import plotly.graph_objects as go
 
+
+@st.cache_resource
+def get_db_connection():
+    # Use cloud secrets if available, else fall back to local
+    db_host = st.secrets["database"]["DB_HOST"] if "database" in st.secrets else os.getenv("DB_HOST", "localhost")
+    db_port = int(st.secrets["database"]["DB_PORT"]) if "database" in st.secrets else int(os.getenv("DB_PORT", 5433))
+    db_name = st.secrets["database"]["DB_NAME"] if "database" in st.secrets else os.getenv("DB_NAME", "semantic_search_db")
+    db_user = st.secrets["database"]["DB_USER"] if "database" in st.secrets else os.getenv("DB_USER", "postgres")
+    db_password = st.secrets["database"]["DB_PASSWORD"] if "database" in st.secrets else os.getenv("DB_PASSWORD", "postgres")
+
+    conn = psycopg2.connect(
+        host=db_host,
+        port=db_port,
+        dbname=db_name,
+        user=db_user,
+        password=db_password
+    )
+    return conn
+
+
+
 # Page configuration
 st.set_page_config(
     page_title="Medical Search System",
