@@ -8,6 +8,8 @@ psycopg2-binary
 #psycopg2-binary==2.9.6
 pgvector==0.2.5            # Extension pour vecteurs dans PostgreSQL
 
+huggingface-hub
+
 # Machine Learning / Embeddings
 sentence-transformers==2.2.2  # Modèles d'embeddings
 torch>=2.0.0                  # PyTorch (requis par sentence-transformers)
@@ -37,3 +39,4 @@ colorama>=0.4.6            # Couleurs dans le terminal (Windows)
 pytest>=7.4.0              # Tests unitaires
 streamlit
 wheel
+
