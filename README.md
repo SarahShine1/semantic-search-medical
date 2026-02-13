@@ -14,28 +14,6 @@ MedSearch AI provides a fast, intuitive interface for searching through medical 
 
 ---
 
-## Features
-
-### Search Capabilities
-- **Semantic Search (Fast)** - General-purpose semantic search using MiniLM model (384-dimensional embeddings)
-- **Semantic Search (Medical)** - Specialized medical semantic search using PubMedBERT (768-dimensional embeddings)
-- **Keyword Search** - Full-text search using PostgreSQL's full-text search capabilities
-
-### Advanced Features
-- **Result Comparison** - Compare results between different search methods to analyze overlap ("chevauchement")
-- **Overlap Metrics** - View overlap statistics and percentages between search results
-- **Performance Analysis** - Visual charts showing similarity scores and result distributions
-- **Modern UI** - Clean, minimalist interface inspired by Google Search
-- **Responsive Design** - Works seamlessly on desktop and tablet devices
-
-### Technical Highlights
-- Dual embedding models for diverse use cases
-- Vector indexing (IVFFlat) for fast similarity search
-- Full-text search indexing for hybrid search capabilities
-- Real-time embedding generation
-- Batch processing support
-
----
 
 ## Architecture
 
@@ -275,90 +253,6 @@ semantic-search-medical/
 
 ---
 
-## Search Methods Explained
-
-### Semantic Search
-Finds documents with similar **meaning**, even if they don't share exact keywords.
-
-**Process:**
-1. Your query is converted to a 384D or 768D vector (embedding)
-2. Compared against all document embeddings using cosine similarity
-3. Top 5 most similar documents returned with similarity scores
-
-**Best For:** Understanding general medical concepts, symptom descriptions
-
-### Keyword Search
-Finds documents containing your **exact keywords** using PostgreSQL full-text search.
-
-**Process:**
-1. Query tokenized and stemmed
-2. Matched against pre-indexed question/answer text
-3. Results ranked by relevance score
-
-**Best For:** Finding specific conditions, treatments, procedures
-
-### Comparison
-Compare results from different search methods to analyze overlap:
-- Shows how many results appear in multiple searches
-- Percentage of overlap
-- Highlights documents found by multiple methods
-
-**Use Case:** Validation - ensure semantic and keyword search agree on top results
-
----
-
-## Database Details
-
-### Tables
-
-**medical_documents_minilm**
-```sql
-- id (PRIMARY KEY)
-- question (TEXT)
-- answer (TEXT)
-- combined_text (TEXT)
-- category (VARCHAR)
-- qtype (VARCHAR)
-- source (VARCHAR) - Default: 'MedQuAD'
-- embedding (VECTOR(384))
-- created_at (TIMESTAMP)
-```
-
-**medical_documents_pubmed**
-```sql
-- Same schema as above
-- embedding (VECTOR(768)) - Higher dimensionality
-```
-
-### Indexes
-- **Vector Index (IVFFlat)** - Fast similarity search on embeddings
-- **Full-Text Indexes** - Fast keyword/phrase search
-- **Category Index** - Quick filtering by medical category
-
----
-
-## API Reference
-
-### Core Functions (app.py)
-
-**`semantic_search(query, model, table_name, top_k=5)`**
-- Returns: List of dicts with `id`, `question`, `answer`, `score`
-- `model`: 'fast' or 'medical'
-- `score`: Cosine similarity (0-1)
-
-**`keyword_search(query, table_name, top_k=5)`**
-- Returns: List of dicts with full document info
-- Uses PostgreSQL full-text search
-
-**`display_result(result, index, search_type, highlight)`**
-- Renders individual result card in Streamlit
-- `highlight`: Shows orange "Chevauchement" badge if True
-
-**`compare_semantic_medical(query)`**
-- Runs both semantic models, compares results
-- Returns overlap metrics and comparison grid
-
----
 
 ## Troubleshooting
 
